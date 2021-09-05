@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SearchFilter from './SearchFilter';
 
 function EventList() {
   const [events, setEvents] = useState(null)
   const [nextPage, setNextPage] = useState(null)
   const [previousPage, setPreviousPage] = useState(null)
-  const [virtualOnly, setVirtualOnly] = useState(false)
 
   const fetchAndSetData = async(api) => {
     const response = (await axios.get(api)).data
@@ -32,11 +32,6 @@ function EventList() {
     }
   }
 
-  const handleSearchFilter = () => {
-    const currTimestamp = Math.floor((Date.now()) / 1000)
-    const api = `https://api.mobilize.us/v1/events?timeslot_start=gte_${currTimestamp}&is_virtual=${virtualOnly}&per_page=15`
-    fetchAndSetData(api)
-  }
 
   return (
     <div>
@@ -44,19 +39,8 @@ function EventList() {
 
       <Link to="/map">Go to Map View</Link>
 
-      <div id="search-filter">
-        <p>Filter event results: </p>
-
-        <form onSubmit={handleSearchFilter}>
-          <input id="virtual-only" type="checkbox" onChange={() => setVirtualOnly(!virtualOnly)}/>
-          <label htmlFor="virtual-only">Virtual Only Events</label>
-
-          <input type="submit" value="Get Events"/>
-        </form>
-
-      </div>
+      <SearchFilter fetchData={fetchAndSetData} />
       
-
       { events ? 
           <ul> {events.map((event, idx) => {
           const { title, sponsor, location, timeslots, browser_url, is_virtual } = event
@@ -76,8 +60,10 @@ function EventList() {
           : <h1>Loading</h1>
       }
 
-      { previousPage ? <button onClick={() => handlePageChange("previous")}>Previous Page</button> : null }
-      <button onClick={() => handlePageChange("next")}>Next Page</button>     
+      <div id="pagination-buttons">
+        { previousPage ? <button onClick={() => handlePageChange("previous")}>Previous Page</button> : null }
+        <button onClick={() => handlePageChange("next")}>Next Page</button>
+      </div>
 
     </div>
   )

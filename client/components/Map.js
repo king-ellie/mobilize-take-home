@@ -9,9 +9,8 @@ function Map() {
     const mapContainerRef = useRef(null)
     const [loading, setLoading] = useState(true)
 
-    const fetchData = async() => {
-        const currTimestamp = Math.floor((Date.now()) / 1000)
-        const { data } = (await axios.get(`https://api.mobilize.us/v1/events?timeslot_start=gte_${currTimestamp}&per_page=200`)).data
+    const fetchData = async(api) => {
+        const { data } = (await axios.get(api)).data
         setLoading(false)
         return data
     }
@@ -71,7 +70,8 @@ function Map() {
     useEffect(() => {
         async function addEventsToMap() {
             // fetch data
-            const data = await fetchData()
+            const currTimestamp = Math.floor((Date.now()) / 1000)
+            const data = await fetchData(`https://api.mobilize.us/v1/events?timeslot_start=gte_${currTimestamp}&per_page=200`)
             
             // initialize map
             const map = new mapboxgl.Map({
