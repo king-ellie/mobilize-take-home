@@ -42,28 +42,31 @@ function EventList() {
       <SearchFilter fetchData={fetchAndSetData} />
       
       { events ? 
+        <div>
           <ul> {events.map((event, idx) => {
-          const { title, sponsor, location, timeslots, browser_url, is_virtual } = event
+            const { title, sponsor, location, timeslots, browser_url, is_virtual } = event
 
-          let firstTimeSlot = (new Date(timeslots[0].start_date * 1000)).toString()
+            let firstTimeSlot = (new Date(timeslots[0].start_date * 1000)).toString()
 
-          return (
-              <li key={idx} className="event-listing">
-                <h3>{title}</h3>
-                <h4>{sponsor.name} | {is_virtual ? "Virtual" : location.region}</h4>
-                <p>{firstTimeSlot} {timeslots.length > 1 ? `and ${timeslots.length} more dates` : null} </p>
-                <a href={`${browser_url}`}>Go to Event</a>
-              </li>
-          )
-          })} </ul>
+            return (
+                <li key={idx} className="event-listing">
+                  <h3>{title}</h3>
+                  <h4>{sponsor.name} | {is_virtual ? "Virtual" : location.region}</h4>
+                  <p>{firstTimeSlot} {timeslots.length > 1 ? `and ${timeslots.length} more dates` : null} </p>
+                  <a href={`${browser_url}`}>Go to Event</a>
+                </li>
+            )
+          })}
+          </ul>
 
-          : <h1>Loading</h1>
+          <div id="pagination-buttons">
+              { previousPage ? <button onClick={() => handlePageChange("previous")}>Previous Page</button> : null }
+              <button onClick={() => handlePageChange("next")}>Next Page</button>
+            </div>
+        </div>
+
+        : <h1>Loading</h1>
       }
-
-      <div id="pagination-buttons">
-        { previousPage ? <button onClick={() => handlePageChange("previous")}>Previous Page</button> : null }
-        <button onClick={() => handlePageChange("next")}>Next Page</button>
-      </div>
 
     </div>
   )

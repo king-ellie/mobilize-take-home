@@ -8,7 +8,9 @@ function App() {
   return (
     <Router>
       <div>
-        <h1>Take Action!</h1>
+        <header>
+          <h1>Take Action!</h1>
+        </header>
 
         <Switch>
           <Route path="/map">
