@@ -45,10 +45,10 @@ function EventList() {
 
             return (
                 <li key={idx} className="event-listing">
-                <h3>{title}</h3>
-                <h4>{sponsor.name} | {is_virtual ? "Virtual" : location.region}</h4>
-                <p>{firstTimeSlot} {timeslots.length > 1 ? `and ${timeslots.length} more dates` : null} </p>
-                <a href={`${browser_url}`}>Go to Event</a>
+                  <h3>{title}</h3>
+                  <h4>{sponsor.name} | {is_virtual ? "Virtual" : location.region}</h4>
+                  <p>{firstTimeSlot} {timeslots.length > 1 ? `and ${timeslots.length} more dates` : null} </p>
+                  <a href={`${browser_url}`}>Go to Event</a>
                 </li>
             )
             })} </ul>
