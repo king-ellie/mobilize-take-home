@@ -1,5 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+
 mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
 
 function Map() {
@@ -14,11 +16,13 @@ function Map() {
         })
     })
 
-  return (
-    <div>
-      <div ref={mapContainerRef} id="map-container"></div>
-    </div>
-  )
+    return (
+        <div>
+            <h3>Map View</h3>
+            <Link to="/">Go to List View</Link>
+            <div ref={mapContainerRef} id="map-container"></div>
+        </div>
+    )
 }
 
 export default Map
