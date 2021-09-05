@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import Map from './Map';
 
 
 function App() {
@@ -33,33 +34,35 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Take Action!</h1>
-      <h3>Upcoming Events</h3>
+      <div>
+        <h1>Take Action!</h1>
+        <h3>Upcoming Events</h3>
+        
+        <Map />
 
-      { events ? 
-        <ul> {events.map((event, idx) => {
-          const { title, sponsor, location, timeslots, browser_url, is_virtual } = event
+        { events ? 
+          <ul> {events.map((event, idx) => {
+            const { title, sponsor, location, timeslots, browser_url, is_virtual } = event
 
-          let firstTimeSlot = (new Date(timeslots[0].start_date * 1000)).toString()
+            let firstTimeSlot = (new Date(timeslots[0].start_date * 1000)).toString()
 
-          return (
-            <li key={idx} className="event-listing">
-              <h3>{title}</h3>
-              <h4>{sponsor.name} | {is_virtual ? "Virtual" : location.region}</h4>
-              <p>{firstTimeSlot} {timeslots.length > 1 ? `and ${timeslots.length} more dates` : null} </p>
-              <a href={`${browser_url}`}>Go to Event</a>
-            </li>
-          )
-        })} </ul>
+            return (
+              <li key={idx} className="event-listing">
+                <h3>{title}</h3>
+                <h4>{sponsor.name} | {is_virtual ? "Virtual" : location.region}</h4>
+                <p>{firstTimeSlot} {timeslots.length > 1 ? `and ${timeslots.length} more dates` : null} </p>
+                <a href={`${browser_url}`}>Go to Event</a>
+              </li>
+            )
+          })} </ul>
 
-        : <h1>Loading</h1>
-      }
+          : <h1>Loading</h1>
+        }
 
-      { previousPage ? <button onClick={() => handlePageChange("previous")}>Previous Page</button> : null }
-      <button onClick={() => handlePageChange("next")}>Next Page</button>
+        { previousPage ? <button onClick={() => handlePageChange("previous")}>Previous Page</button> : null }
+        <button onClick={() => handlePageChange("next")}>Next Page</button>
 
-    </div>
+      </div>
   )
 }
 
