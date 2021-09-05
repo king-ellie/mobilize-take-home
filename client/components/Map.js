@@ -48,6 +48,25 @@ function Map() {
         return mapEvents
     }
 
+    // this function creates popups on event circles
+    const createPopup = (currFeature, map) => {
+        const popup = document.getElementsByClassName('mapboxgl-popup');
+        // if user already has popup on another event open, remove it
+        if (popup[0]) popup[0].remove();
+
+        const { title, sponsor, timeslots, browser_url } = currFeature.properties
+
+        const openPopup = new mapboxgl.Popup()
+          .setLngLat(currFeature.geometry.coordinates)
+          .setHTML(`
+            <h3>${title}</h3>
+            <h4>${sponsor}</h4>
+            <p>${timeslots}</p>
+            <a href=${browser_url}>Go to Event Page</a>
+          `)
+          .addTo(map)
+    }
+
     // initialize map with events data layer
     useEffect(() => {
         async function addEventsToMap() {
@@ -74,6 +93,19 @@ function Map() {
                         data: mapSourceData
                     }
                 })
+            })
+
+            // add popup to map
+            map.on('click', (event) => {
+                // see if there's an event at point of click
+                const features = map.queryRenderedFeatures(event.point, {
+                    layers: ['eventLocations']
+                })
+                
+                if (!features.length) return
+                
+                const clickedPoint = features[0]            
+                createPopup(clickedPoint, map)
             })
         }
         addEventsToMap()

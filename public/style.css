@@ -16,6 +16,21 @@ ul {
 }
 
 #map-container {
-  height: 60vh;
-  width: 100vw;
+  position: absolute;
+  height: 80vh;
+  width: 100%;
+}
+
+/* popup styling */
+.mapboxgl-popup-content {
+  padding: 15px;
+}
+
+.mapboxgl-popup-content h3 {
+  background: blue;
+  border-radius: 10px;
+  color: white;
+  margin: 0;
+  padding: 15px;
+  text-align: center
 }
