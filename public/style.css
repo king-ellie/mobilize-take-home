@@ -15,6 +15,17 @@ ul {
   box-shadow: 0 0 10px gray;
 }
 
+#search-filter{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+#search-filter * {
+  padding: 5px 10px 5px 0;
+}
+
 #map-container {
   position: absolute;
   height: 80vh;
